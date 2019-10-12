@@ -2,20 +2,30 @@ import sys
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
-
+import os
+import time
 def detect_img(yolo):
-    while True:
-        img = input('Input image filename:')
-        try:
-            image = Image.open(img)
-        except:
-            print('Open Error! Try again!')
-            continue
-        else:
-            r_image = yolo.detect_image(image)
-            r_image.show()
+
+    img_list = os.listdir(FLAGS.floder)
+    for each_path in img_list:
+        if each_path.endswith(".jpg"):
+            current_image_path = os.path.join(FLAGS.floder,each_path)
+
+            time_start = time.time()
+            try:
+                image = Image.open(current_image_path)
+            except:
+                print('Open Error! Try again!')
+                continue
+            else:
+                time_end = time.time()
+                print("load image: ",time_end - time_start,"s.")
+                r_image = yolo.detect_image(image)
+                print("detect time: ",time.time() - time_end,"s.")
+                # r_image.show()
     yolo.close_session()
 
+    #
 FLAGS = None
 
 if __name__ == '__main__':
@@ -26,25 +36,21 @@ if __name__ == '__main__':
     '''
     parser.add_argument(
         '--model', type=str,
-        default= YOLO.get_defaults("model_path"),
         help='path to model weight file, default ' + YOLO.get_defaults("model_path")
     )
 
     parser.add_argument(
         '--anchors', type=str,
-        default= YOLO.get_defaults("anchors_path"),
         help='path to anchor definitions, default ' + YOLO.get_defaults("anchors_path")
     )
 
     parser.add_argument(
         '--classes', type=str,
-        default=YOLO.get_defaults("classes_path"),
         help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
     )
 
     parser.add_argument(
         '--gpu_num', type=int,
-        default= YOLO.get_defaults("gpu_num"),
         help='Number of GPU to use, default ' + str(YOLO.get_defaults("gpu_num"))
     )
 
@@ -64,10 +70,14 @@ if __name__ == '__main__':
         "--output", nargs='?', type=str, default="",
         help = "[Optional] Video output path"
     )
-
+    parser.add_argument(
+        "--floder",
+        type=str,
+        default=r"D:\Data\JPEGImages",
+        help = "image detect folder path."
+    )
     FLAGS = parser.parse_args()
-    print(FLAGS)
-    exit(1)
+
     if FLAGS.image:
         """
         Image detection mode, disregard any remaining command line arguments
@@ -75,6 +85,7 @@ if __name__ == '__main__':
         print("Image detection mode")
         if "input" in FLAGS:
             print(" Ignoring remaining command line arguments: " + FLAGS.input + "," + FLAGS.output)
+
         detect_img(YOLO(**vars(FLAGS)))
     elif "input" in FLAGS:
         detect_video(YOLO(**vars(FLAGS)), FLAGS.input, FLAGS.output)
