@@ -26,21 +26,25 @@ if __name__ == '__main__':
     '''
     parser.add_argument(
         '--model', type=str,
+        default= YOLO.get_defaults("model_path"),
         help='path to model weight file, default ' + YOLO.get_defaults("model_path")
     )
 
     parser.add_argument(
         '--anchors', type=str,
+        default= YOLO.get_defaults("anchors_path"),
         help='path to anchor definitions, default ' + YOLO.get_defaults("anchors_path")
     )
 
     parser.add_argument(
         '--classes', type=str,
+        default=YOLO.get_defaults("classes_path"),
         help='path to class definitions, default ' + YOLO.get_defaults("classes_path")
     )
 
     parser.add_argument(
         '--gpu_num', type=int,
+        default= YOLO.get_defaults("gpu_num"),
         help='Number of GPU to use, default ' + str(YOLO.get_defaults("gpu_num"))
     )
 
@@ -62,7 +66,8 @@ if __name__ == '__main__':
     )
 
     FLAGS = parser.parse_args()
-
+    print(FLAGS)
+    exit(1)
     if FLAGS.image:
         """
         Image detection mode, disregard any remaining command line arguments
