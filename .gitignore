@@ -108,3 +108,5 @@ ENV/
 .mypy_cache/
 *.xml
 *.iml
+HeiBeiHikvision/train_processed.txt
+HeiBeiHikvision/train.txt
