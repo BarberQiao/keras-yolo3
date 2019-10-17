@@ -47,7 +47,9 @@ def convert_annotation_write_lines(image_id, list_file, object_class_list, stand
     return finded_set
 
 image_ids = open(r'HeiBeiHikvision/train.txt').read().strip().split()
-list_file = open(r'HeiBeiHikvision/train_processed.txt', 'w')
+output_train_file_path = r'HeiBeiHikvision/train_processed.txt'
+output_class_txt_path = r"HeiBeiHikvision/HikVision_classes.txt"
+list_file = open(output_train_file_path, 'w')
 all_class = get_all_class_name_by_image_ID_list(image_ids)
 
 find_class_dict = dict()
@@ -69,8 +71,13 @@ for image_id in image_ids:
                 print(image_id, "Deleted key: ", each_cls, find_class_dict)
 list_file.close()
 
-with open(r'HeiBeiHikvision/train_processed.txt', "r") as f:
+with open(output_train_file_path, "r") as f:
     data = f.readlines()
 print(data)
 print(len(data))
 print("standard: ", standard_class)
+write_class = open(output_class_txt_path, 'w')
+for tmp_class in standard_class:
+    write_class.write(tmp_class)
+    write_class.write('\n')
+write_class.close()
