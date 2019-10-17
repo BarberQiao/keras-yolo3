@@ -37,13 +37,18 @@ class YOLO(object):
             return "Unrecognized attribute name '" + n + "'"
 
     def __init__(self, **kwargs):
+        print("Init Yolo model.")
         self.__dict__.update(self._defaults) # set up default values
+        print("Init model by settings: ", kwargs)
         self.__dict__.update(kwargs) # and update with user overrides
+        print("Init model with model: ",self.__dict__["model_path"])
         self.class_names = self._get_class()
+        print("Init model class name: ", self.class_names)
         self.anchors = self._get_anchors()
+        print("Init model anchors: ", self.anchors)
         self.sess = K.get_session()
         self.boxes, self.scores, self.classes = self.generate()
-
+        print("Init model done, boxes, scores, classes: ",self.boxes, self.scores, self.classes)
     def _get_class(self):
         classes_path = os.path.expanduser(self.classes_path)
         with open(classes_path) as f:
