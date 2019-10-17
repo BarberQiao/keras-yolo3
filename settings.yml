@@ -1,0 +1,17 @@
+
+annotation_path: HeiBeiHikvision\train_processed.txt
+classes_path: HeiBeiHikvision\HikVision_classes.txt
+anchors_path: model_data\yolo_anchors.txt
+
+pre_train_model_path: model_data\yolo.h5
+log_path: logs\0000
+model_output_name_step1: trained_weights_stage_1.h5
+model_output_name_final: yolo_weight_for_pretrain.h5
+
+train_input_size: [416,416]
+train_data_split: 0.1
+train_epoch_step1: 2
+train_batch_size_step1: 8
+train_epoch_step2: 1
+train_batch_size_step2: 8
+train_freeze_layer_step2: 240
