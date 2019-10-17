@@ -110,3 +110,9 @@ ENV/
 *.iml
 HeiBeiHikvision/train_processed.txt
 HeiBeiHikvision/train.txt
+HeiBeiHikvision/HikVision_classes.txt
+VOCdevkit/VOC2007/imageSets/Main/test.txt
+VOCdevkit/VOC2007/imageSets/Main/train.txt
+VOCdevkit/VOC2007/imageSets/Main/trainval.txt
+VOCdevkit/VOC2007/imageSets/Main/val.txt
+VOCdevkit/VOC2007/test.py
